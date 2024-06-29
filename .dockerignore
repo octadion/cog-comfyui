@@ -14,13 +14,7 @@
 *.webm
 
 # Models
-*.ckpt
-*.safetensors
-*.pth
-*.bin
-*.onnx
-*.torchscript
-# .pt files are used by efficiency-nodes-comfyui
+
 
 # Files
 scripts/*

@@ -1,157 +1,558 @@
 {
-    "19": {
-      "inputs": {
-        "max_width": 1024,
-        "max_height": 1024,
-        "min_width": 0,
-        "min_height": 0,
-        "crop_if_required": "no",
-        "images": [
-          "20",
-          0
-        ]
-      },
-      "class_type": "ConstrainImage|pysssss",
-      "_meta": {
-        "title": "Constrain Image 🐍"
-      }
+  "962": {
+    "inputs": {
+      "seed": [
+        "1724",
+        3
+      ],
+      "steps": 8,
+      "cfg": 1.5,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "999",
+        0
+      ],
+      "positive": [
+        "973",
+        0
+      ],
+      "negative": [
+        "973",
+        1
+      ],
+      "latent_image": [
+        "1071",
+        0
+      ]
     },
-    "20": {
-      "inputs": {
-        "image": "https://raw.githubusercontent.com/crimpproduction/debug/main/uploads/licensePlate_input%20(2).jpg",
-        "upload": "image"
-      },
-      "class_type": "LoadImage",
-      "_meta": {
-        "title": "Load Image"
-      }
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "963": {
+    "inputs": {
+      "ckpt_name": "dreamshaper_8.safetensors"
     },
-    "21": {
-      "inputs": {
-        "mask": [
-          "26",
-          0
-        ]
-      },
-      "class_type": "MaskToImage",
-      "_meta": {
-        "title": "Convert Mask to Image"
-      }
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "966": {
+    "inputs": {
+      "text": "nude,worst quality, low quality, normal quality,\nlowers, bad anatomy, bad hands, (multiple view)",
+      "clip": [
+        "967",
+        0
+      ]
     },
-    "23": {
-      "inputs": {
-        "model_name": "GroundingDINO_SwinB (938MB)"
-      },
-      "class_type": "GroundingDinoModelLoader (segment anything)",
-      "_meta": {
-        "title": "GroundingDinoModelLoader (segment anything)"
-      }
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "967": {
+    "inputs": {
+      "stop_at_clip_layer": -1,
+      "clip": [
+        "999",
+        1
+      ]
     },
-    "24": {
-      "inputs": {
-        "prompt": "licenseplate",
-        "threshold": 0.3,
-        "sam_model": [
-          "25",
-          0
-        ],
-        "grounding_dino_model": [
-          "23",
-          0
-        ],
-        "image": [
-          "19",
-          0
-        ]
-      },
-      "class_type": "GroundingDinoSAMSegment (segment anything)",
-      "_meta": {
-        "title": "GroundingDinoSAMSegment (segment anything)"
-      }
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP Set Last Layer"
+    }
+  },
+  "970": {
+    "inputs": {
+      "image": "https://octadion.sgp1.cdn.digitaloceanspaces.com/model_person1.jpg",
+      "upload": "image"
     },
-    "25": {
-      "inputs": {
-        "model_name": "sam_vit_b_01ec64.pth",
-        "device_mode": "Prefer GPU"
-      },
-      "class_type": "SAMLoader",
-      "_meta": {
-        "title": "SAMLoader (Impact)"
-      }
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "971": {
+    "inputs": {
+      "detect_hand": "enable",
+      "detect_body": "enable",
+      "detect_face": "enable",
+      "resolution": 1024,
+      "bbox_detector": "yolox_l.onnx",
+      "pose_estimator": "dw-ll_ucoco_384.onnx",
+      "image": [
+        "1162",
+        0
+      ]
     },
-    "26": {
-      "inputs": {
-        "kernel_size": 5,
-        "sigma": 20,
-        "mask": [
-          "69",
-          0
-        ]
-      },
-      "class_type": "ImpactGaussianBlurMask",
-      "_meta": {
-        "title": "Gaussian Blur Mask"
-      }
+    "class_type": "DWPreprocessor",
+    "_meta": {
+      "title": "DWPose Estimator"
+    }
+  },
+  "973": {
+    "inputs": {
+      "strength": 1,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "1625",
+        0
+      ],
+      "negative": [
+        "966",
+        0
+      ],
+      "control_net": [
+        "975",
+        0
+      ],
+      "image": [
+        "971",
+        0
+      ]
     },
-    "69": {
-      "inputs": {
-        "expand": 20,
-        "tapered_corners": true,
-        "mask": [
-          "24",
-          1
-        ]
-      },
-      "class_type": "GrowMask",
-      "_meta": {
-        "title": "GrowMask"
-      }
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply Pose"
+    }
+  },
+  "975": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_openpose.pth",
+      "model": [
+        "999",
+        0
+      ]
     },
-    "81": {
-      "inputs": {
-        "blend_factor": 0.9,
-        "blend_mode": "screen",
-        "image1": [
-          "21",
-          0
-        ],
-        "image2": [
-          "19",
-          0
-        ]
-      },
-      "class_type": "ImageBlend",
-      "_meta": {
-        "title": "ImageBlend"
-      }
+    "class_type": "DiffControlNetLoader",
+    "_meta": {
+      "title": "Pose Model"
+    }
+  },
+  "988": {
+    "inputs": {},
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "Invert Face And Hair Mask"
+    }
+  },
+  "999": {
+    "inputs": {
+      "lora_name": "lcm-lora-sdv1-5.safetensors",
+      "strength_model": 0.8500000000000001,
+      "strength_clip": 0.8500000000000001,
+      "model": [
+        "963",
+        0
+      ],
+      "clip": [
+        "963",
+        1
+      ]
     },
-    "98": {
-      "inputs": {
-        "filename_prefix": "Mask",
-        "images": [
-          "143",
-          0
-        ]
-      },
-      "class_type": "SaveImage",
-      "_meta": {
-        "title": "Save Image"
-      }
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "1003": {
+    "inputs": {
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
     },
-    "143": {
-      "inputs": {
-        "image": [
-          "19",
-          0
-        ],
-        "alpha": [
-          "26",
-          0
-        ]
-      },
-      "class_type": "JoinImageWithAlpha",
-      "_meta": {
-        "title": "Join Image with Alpha"
-      }
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "1025": {
+    "inputs": {
+      "images": [
+        "971",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1066": {
+    "inputs": {
+      "pixels": [
+        "1162",
+        0
+      ],
+      "vae": [
+        "1003",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "1071": {
+    "inputs": {
+      "samples": [
+        "1066",
+        0
+      ],
+      "mask": [
+        "1786",
+        0
+      ]
+    },
+    "class_type": "SetLatentNoiseMask",
+    "_meta": {
+      "title": "Keeping Face Hair (If Using OpenPose)"
+    }
+  },
+  "1162": {
+    "inputs": {
+      "max_width": 1024,
+      "max_height": 1024,
+      "min_width": 0,
+      "min_height": 0,
+      "crop_if_required": "no",
+      "images": [
+        "970",
+        0
+      ]
+    },
+    "class_type": "ConstrainImage|pysssss",
+    "_meta": {
+      "title": "Constrain Image 🐍"
+    }
+  },
+  "1252": {
+    "inputs": {
+      "samples": [
+        "962",
+        0
+      ],
+      "vae": [
+        "1003",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1617": {
+    "inputs": {
+      "enabled": true,
+      "swap_model": "inswapper_128.onnx",
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "codeformer.pth",
+      "face_restore_visibility": 1,
+      "codeformer_weight": 0.5,
+      "detect_gender_input": "no",
+      "detect_gender_source": "no",
+      "input_faces_index": "0, 1, 2, 3, 4",
+      "source_faces_index": "0, 1, 2, 3, 4",
+      "console_log_level": 1,
+      "input_image": [
+        "1252",
+        0
+      ],
+      "source_image": [
+        "1162",
+        0
+      ]
+    },
+    "class_type": "ReActorFaceSwap",
+    "_meta": {
+      "title": "ReActor 🌌 Fast Face Swap"
+    }
+  },
+  "1622": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "true",
+      "text_a": [
+        "1748",
+        0
+      ],
+      "text_b": [
+        "1749",
+        0
+      ],
+      "text_c": [
+        "1718",
+        0
+      ],
+      "text_d": [
+        "1719",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1625": {
+    "inputs": {
+      "text": [
+        "1622",
+        0
+      ],
+      "clip": [
+        "967",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "1716": {
+    "inputs": {
+      "text": "wearing extravagant suit"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Male Prompt"
+    }
+  },
+  "1717": {
+    "inputs": {
+      "text": "wearing glamour dress with intricate ornaments"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Female Prompt"
+    }
+  },
+  "1718": {
+    "inputs": {
+      "text": "in a magical mansion "
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Background Setting"
+    }
+  },
+  "1719": {
+    "inputs": {
+      "text": "Cinematic Composition, High Quality, Masterpiece"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Style Setting"
+    }
+  },
+  "1720": {
+    "inputs": {
+      "width": 768,
+      "height": 512,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "1724": {
+    "inputs": {
+      "seed": 469232995236981
+    },
+    "class_type": "Seed",
+    "_meta": {
+      "title": "Seed"
+    }
+  },
+  "1738": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "Bool",
+    "_meta": {
+      "title": "Bool"
+    }
+  },
+  "1739": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "1617",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "1748": {
+    "inputs": {
+      "ANY": [
+        "1738",
+        0
+      ],
+      "IF_TRUE": [
+        "1750",
+        0
+      ],
+      "IF_FALSE": [
+        "1751",
+        0
+      ]
+    },
+    "class_type": "If ANY execute A else B",
+    "_meta": {
+      "title": "If"
+    }
+  },
+  "1749": {
+    "inputs": {
+      "ANY": [
+        "1738",
+        0
+      ],
+      "IF_TRUE": [
+        "1716",
+        0
+      ],
+      "IF_FALSE": [
+        "1717",
+        0
+      ]
+    },
+    "class_type": "If ANY execute A else B",
+    "_meta": {
+      "title": "If"
+    }
+  },
+  "1750": {
+    "inputs": {
+      "text": "male"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Male Prompt"
+    }
+  },
+  "1751": {
+    "inputs": {
+      "text": "female"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Male Prompt"
+    }
+  },
+  "1752": {
+    "inputs": {
+      "images": [
+        "1252",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1763": {
+    "inputs": {
+      "mask": [
+        "1785",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "1764": {
+    "inputs": {
+      "images": [
+        "1763",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1780": {
+    "inputs": {
+      "model_name": "GroundingDINO_SwinB (938MB)"
+    },
+    "class_type": "GroundingDinoModelLoader (segment anything)",
+    "_meta": {
+      "title": "GroundingDinoModelLoader (segment anything)"
+    }
+  },
+  "1781": {
+    "inputs": {
+      "prompt": "face",
+      "threshold": 0.5,
+      "sam_model": [
+        "1782",
+        0
+      ],
+      "grounding_dino_model": [
+        "1780",
+        0
+      ],
+      "image": [
+        "1162",
+        0
+      ]
+    },
+    "class_type": "GroundingDinoSAMSegment (segment anything)",
+    "_meta": {
+      "title": "GroundingDinoSAMSegment (segment anything)"
+    }
+  },
+  "1782": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "Prefer GPU"
+    },
+    "class_type": "SAMLoader",
+    "_meta": {
+      "title": "SAMLoader (Impact)"
+    }
+  },
+  "1785": {
+    "inputs": {
+      "kernel_size": 20,
+      "sigma": 10,
+      "mask": [
+        "1781",
+        1
+      ]
+    },
+    "class_type": "ImpactGaussianBlurMask",
+    "_meta": {
+      "title": "Gaussian Blur Mask"
+    }
+  },
+  "1786": {
+    "inputs": {
+      "mask": [
+        "1785",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "Invert Face And Hair Mask"
     }
   }
+}
