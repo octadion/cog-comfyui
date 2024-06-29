@@ -1,0 +1,157 @@
+{
+    "19": {
+      "inputs": {
+        "max_width": 1024,
+        "max_height": 1024,
+        "min_width": 0,
+        "min_height": 0,
+        "crop_if_required": "no",
+        "images": [
+          "20",
+          0
+        ]
+      },
+      "class_type": "ConstrainImage|pysssss",
+      "_meta": {
+        "title": "Constrain Image 🐍"
+      }
+    },
+    "20": {
+      "inputs": {
+        "image": "https://raw.githubusercontent.com/crimpproduction/debug/main/uploads/licensePlate_input%20(2).jpg",
+        "upload": "image"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "Load Image"
+      }
+    },
+    "21": {
+      "inputs": {
+        "mask": [
+          "26",
+          0
+        ]
+      },
+      "class_type": "MaskToImage",
+      "_meta": {
+        "title": "Convert Mask to Image"
+      }
+    },
+    "23": {
+      "inputs": {
+        "model_name": "GroundingDINO_SwinB (938MB)"
+      },
+      "class_type": "GroundingDinoModelLoader (segment anything)",
+      "_meta": {
+        "title": "GroundingDinoModelLoader (segment anything)"
+      }
+    },
+    "24": {
+      "inputs": {
+        "prompt": "licenseplate",
+        "threshold": 0.3,
+        "sam_model": [
+          "25",
+          0
+        ],
+        "grounding_dino_model": [
+          "23",
+          0
+        ],
+        "image": [
+          "19",
+          0
+        ]
+      },
+      "class_type": "GroundingDinoSAMSegment (segment anything)",
+      "_meta": {
+        "title": "GroundingDinoSAMSegment (segment anything)"
+      }
+    },
+    "25": {
+      "inputs": {
+        "model_name": "sam_vit_b_01ec64.pth",
+        "device_mode": "Prefer GPU"
+      },
+      "class_type": "SAMLoader",
+      "_meta": {
+        "title": "SAMLoader (Impact)"
+      }
+    },
+    "26": {
+      "inputs": {
+        "kernel_size": 5,
+        "sigma": 20,
+        "mask": [
+          "69",
+          0
+        ]
+      },
+      "class_type": "ImpactGaussianBlurMask",
+      "_meta": {
+        "title": "Gaussian Blur Mask"
+      }
+    },
+    "69": {
+      "inputs": {
+        "expand": 20,
+        "tapered_corners": true,
+        "mask": [
+          "24",
+          1
+        ]
+      },
+      "class_type": "GrowMask",
+      "_meta": {
+        "title": "GrowMask"
+      }
+    },
+    "81": {
+      "inputs": {
+        "blend_factor": 0.9,
+        "blend_mode": "screen",
+        "image1": [
+          "21",
+          0
+        ],
+        "image2": [
+          "19",
+          0
+        ]
+      },
+      "class_type": "ImageBlend",
+      "_meta": {
+        "title": "ImageBlend"
+      }
+    },
+    "98": {
+      "inputs": {
+        "filename_prefix": "Mask",
+        "images": [
+          "143",
+          0
+        ]
+      },
+      "class_type": "SaveImage",
+      "_meta": {
+        "title": "Save Image"
+      }
+    },
+    "143": {
+      "inputs": {
+        "image": [
+          "19",
+          0
+        ],
+        "alpha": [
+          "26",
+          0
+        ]
+      },
+      "class_type": "JoinImageWithAlpha",
+      "_meta": {
+        "title": "Join Image with Alpha"
+      }
+    }
+  }
